@@ -147,7 +147,7 @@ class AccountViewSet(viewsets.GenericViewSet):
             user.first_name = ""
             user.last_name = ""
             user.profile.picture = ""
-            user.email = ""
+            user.email = username + "@lingoine.gmail.com"
 
             user.save()
             user.profile.save()
@@ -157,7 +157,7 @@ class AccountViewSet(viewsets.GenericViewSet):
                     {
                         'success': True,
                         'token': user_token.token.hex,
-                        'uid': User.objects.get(email=user.email).pk,
+                        'uid': User.objects.get(username=user.username).pk,
                     }
             )
 
