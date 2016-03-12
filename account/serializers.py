@@ -26,9 +26,3 @@ class LanguageLevelSerializer(serializers.Serializer):
 
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
-
-
-class LanguageIdSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Language
-        fields = ['id', 'language']
