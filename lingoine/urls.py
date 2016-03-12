@@ -21,7 +21,7 @@ from django.conf.urls import url, include
 from django.contrib import admin
 from django.views.static import serve
 from rest_framework.routers import DefaultRouter
-from account.views import UserViewSet, UserLanguageViewSet
+from account.views import UserViewSet, UserLanguageViewSet, AccountViewSet
 from language.views import LanguageViewSet
 
 router = DefaultRouter()
@@ -29,6 +29,7 @@ router = DefaultRouter()
 router.register('user_profile', UserViewSet, base_name='user_profile')
 router.register('user_language', UserLanguageViewSet, base_name='user_language')
 router.register('language', LanguageViewSet, base_name='language')
+router.register('accounts', AccountViewSet, base_name='accounts')
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),

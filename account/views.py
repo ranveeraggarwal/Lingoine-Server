@@ -1,11 +1,12 @@
+from django.contrib.auth.models import User
 from rest_framework import viewsets
 from rest_framework.decorators import list_route
 from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST
 
-from account.models import UserProfile, UserLanguageProfile
+from account.models import UserProfile, UserLanguageProfile, UserToken
 from account.serializers import UserProfileSerializer, UserLanguageProfileSerializer, LanguageListSerializer, \
-    LanguageLevelSerializer
+    LanguageLevelSerializer, LoginSerializer
 from core.mixins import SerializerClassRequestContextMixin
 
 
@@ -119,3 +120,42 @@ class UserLanguageViewSet(viewsets.ModelViewSet, SerializerClassRequestContextMi
             return Response({'results': user_languages.data})
         else:
             return Response(serialized_data.errors, status=HTTP_400_BAD_REQUEST)
+
+
+class AccountViewSet(viewsets.GenericViewSet):
+    serializer_class = LoginSerializer
+
+    @list_route(methods=['POST'])
+    def login(self, request):
+        """
+        Logs in the user.
+        ---
+        request_serializer: LoginSerializer
+        """
+        serialized_data = LoginSerializer(data=request.data)
+        if serialized_data.is_valid():
+            username = serialized_data.validated_data['username']
+
+            user, created = User.objects.get_or_create(username=username)
+            if created:
+                user.set_unusable_password()
+                UserProfile.objects.create(user=user)
+
+            user.first_name = ""
+            user.last_name = ""
+            user.profile.picture = ""
+            user.email = ""
+
+            user.save()
+            user.profile.save()
+
+            user_token = UserToken.objects.create(user=user)
+            return Response(
+                    {
+                        'success': True,
+                        'token': user_token.token.hex,
+                        'uid': User.objects.get(email=user.email).pk,
+                    }
+            )
+
+        return Response(serialized_data.errors, status=HTTP_400_BAD_REQUEST)

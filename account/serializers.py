@@ -22,3 +22,7 @@ class LanguageListSerializer(serializers.Serializer):
 
 class LanguageLevelSerializer(serializers.Serializer):
     pass
+
+
+class LoginSerializer(serializers.Serializer):
+    username = serializers.CharField()
