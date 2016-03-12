@@ -11,8 +11,8 @@ class LearningLevels:
 
     @classmethod
     def options(cls):
-        return ((cls.KNOW, 'Beginner'), (cls.PROFICIENT, 'Intermediate'),
-                (cls.LEARNING, 'Advanced'))
+        return ((cls.KNOW, 'Know'), (cls.PROFICIENT, 'Proficient'),
+                (cls.LEARNING, 'Learning'))
 
 
 class UserProfile(models.Model):
@@ -26,7 +26,7 @@ class UserProfile(models.Model):
 
 
 class UserLanguageProfile(models.Model):
-    user_profile = models.ForeignKey(UserProfile)
+    user = models.ForeignKey(User)
     language = models.ForeignKey(Language)
     experience_rating = models.FloatField(default=0.0)
     proficiency_rating = models.FloatField(default=0.0)

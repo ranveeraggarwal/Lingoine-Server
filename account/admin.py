@@ -9,5 +9,5 @@ class UserProfileAdmin(admin.ModelAdmin):
 
 @admin.register(UserLanguageProfile)
 class UserLanguageProfileAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user_profile', 'language', 'experience_rating', 'proficiency_rating', 'learning',
+    list_display = ['id', 'user', 'language', 'experience_rating', 'proficiency_rating', 'learning',
                     'is_expert', 'documents']
