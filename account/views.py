@@ -9,6 +9,6 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = UserProfile.objects.all()
 
 
-class UserLanguageViewSet(viewsets.ReadOnlyModelViewSet):
+class UserLanguageViewSet(viewsets.ModelViewSet):
     serializer_class = UserLanguageProfileSerializer
     queryset = UserLanguageProfile.objects.all()
