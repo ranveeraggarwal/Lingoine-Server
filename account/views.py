@@ -19,7 +19,7 @@ class UserViewSet(viewsets.ReadOnlyModelViewSet):
 class UserLanguageViewSet(viewsets.ModelViewSet, SerializerClassRequestContextMixin):
     serializer_class = UserLanguageProfileSerializer
     queryset = UserLanguageProfile.objects.all()
-    authentication_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     @list_route(methods=['POST'])
     def set_know_languages(self, request):
