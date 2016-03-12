@@ -133,3 +133,5 @@ crashlytics-build.properties
 # Created by .ignore support plugin (hsz.mobi)
 
 db.sqlite3
+
+lingoine/settings_user.py

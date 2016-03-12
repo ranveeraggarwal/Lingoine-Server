@@ -1,3 +1,14 @@
-from django.shortcuts import render
+from rest_framework import viewsets
 
-# Create your views here.
+from account.models import UserProfile, UserLanguageProfile
+from account.serializers import UserProfileSerializer, UserLanguageProfileSerializer
+
+
+class UserViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = UserProfileSerializer
+    queryset = UserProfile.objects.all()
+
+
+class UserLanguageViewSet(viewsets.ReadOnlyModelViewSet):
+    serializer_class = UserLanguageProfileSerializer
+    queryset = UserLanguageProfile.objects.all()
