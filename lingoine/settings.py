@@ -205,6 +205,7 @@ X_FRAME_OPTIONS = 'DENY'
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework.authentication.SessionAuthentication',
+        'account.tokenauth.TokenAuthentication',
     )
 }
 
