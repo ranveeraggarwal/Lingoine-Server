@@ -59,12 +59,16 @@ class UserLanguageViewSet(viewsets.ModelViewSet, SerializerClassRequestContextMi
         if serialized_data.is_valid():
             languages = serialized_data.validated_data['languages']
             for language in languages:
-                user_language = UserLanguageProfile.objects.create(
-                    user=request.user,
-                    language=language,
-                    learning=2,
-                )
-                user_language.save()
+                user_language = UserLanguageProfile.objects.filter(language=language, user=request.user, learning=2)
+                if user_language.exists():
+                    pass
+                else:
+                    user_language = UserLanguageProfile.objects.create(
+                        user=request.user,
+                        language=language,
+                        learning=2,
+                    )
+                    user_language.save()
             return Response({'success': True})
         else:
             return Response(serialized_data.errors, status=HTTP_400_BAD_REQUEST)
@@ -80,12 +84,16 @@ class UserLanguageViewSet(viewsets.ModelViewSet, SerializerClassRequestContextMi
         if serialized_data.is_valid():
             languages = serialized_data.validated_data['languages']
             for language in languages:
-                user_language = UserLanguageProfile.objects.create(
-                    user=request.user,
-                    language=language,
-                    learning=3,
-                )
-                user_language.save()
+                user_language = UserLanguageProfile.objects.filter(language=language, user=request.user, learning=3)
+                if user_language.exists():
+                    pass
+                else:
+                    user_language = UserLanguageProfile.objects.create(
+                        user=request.user,
+                        language=language,
+                        learning=3,
+                    )
+                    user_language.save()
             return Response({'success': True})
         else:
             return Response(serialized_data.errors, status=HTTP_400_BAD_REQUEST)
