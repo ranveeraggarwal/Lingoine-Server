@@ -5,10 +5,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.status import HTTP_400_BAD_REQUEST
 
-from account.models import UserProfile, UserLanguageProfile, UserToken
+from account.models import UserProfile, UserLanguageProfile, UserToken, LearningLevels
 from account.serializers import UserProfileSerializer, UserLanguageProfileSerializer, LanguageListSerializer, \
     LanguageLevelSerializer, LoginSerializer
 from core.mixins import SerializerClassRequestContextMixin
+from language.models import Language
 from language.serializers import LanguageSerializer
 
 
@@ -92,9 +93,9 @@ class UserLanguageViewSet(viewsets.ModelViewSet, SerializerClassRequestContextMi
         """
         serialized_data = LanguageLevelSerializer(data=request.data)
         if serialized_data.is_valid():
-            data = self.get_queryset().filter(user=request.user, learning=1)
-            user_languages = self.get_context_serializer_class(LanguageSerializer, data, many=True)
-            return Response({'results': user_languages.data})
+            languages = Language.objects.filter(users__user=request.user, users__learning=LearningLevels.KNOW)
+            serialized_languages = self.get_context_serializer_class(LanguageSerializer, languages, many=True)
+            return Response({'results': serialized_languages.data})
         else:
             return Response(serialized_data.errors, status=HTTP_400_BAD_REQUEST)
 
