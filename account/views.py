@@ -34,7 +34,7 @@ class UserLanguageViewSet(viewsets.ModelViewSet, SerializerClassRequestContextMi
         if serialized_data.is_valid():
             languages = serialized_data.validated_data['languages']
             for language in languages:
-                user_language = UserLanguageProfile.objects.filter(language=language, user=request.user, learning=1)
+                user_language = UserLanguageProfile.objects.filter(language=language, user=request.user)
                 if user_language.exists():
                     pass
                 else:
@@ -59,7 +59,7 @@ class UserLanguageViewSet(viewsets.ModelViewSet, SerializerClassRequestContextMi
         if serialized_data.is_valid():
             languages = serialized_data.validated_data['languages']
             for language in languages:
-                user_language = UserLanguageProfile.objects.filter(language=language, user=request.user, learning=2)
+                user_language = UserLanguageProfile.objects.filter(language=language, user=request.user)
                 if user_language.exists():
                     pass
                 else:
@@ -84,7 +84,7 @@ class UserLanguageViewSet(viewsets.ModelViewSet, SerializerClassRequestContextMi
         if serialized_data.is_valid():
             languages = serialized_data.validated_data['languages']
             for language in languages:
-                user_language = UserLanguageProfile.objects.filter(language=language, user=request.user, learning=3)
+                user_language = UserLanguageProfile.objects.filter(language=language, user=request.user)
                 if user_language.exists():
                     pass
                 else:
