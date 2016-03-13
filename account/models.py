@@ -30,7 +30,7 @@ class UserProfile(models.Model):
 
 class UserLanguageProfile(models.Model):
     user = models.ForeignKey(User)
-    language = models.ForeignKey(Language)
+    language = models.ForeignKey(Language, related_name='users')
     experience_rating = models.FloatField(default=0.0)
     proficiency_rating = models.FloatField(default=0.0)
     learning = models.IntegerField(default=LearningLevels.LEARNING, blank=True, null=True,
