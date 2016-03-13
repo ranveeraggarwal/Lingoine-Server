@@ -26,5 +26,6 @@ class LanguageViewSet(viewsets.ReadOnlyModelViewSet):
             user=request.user)
         total_such_users = users.count()
         random_val = random.randrange(0, total_such_users)
-        user = users[random_val:1]
+        users = users[random_val:1]
+        user = users.first()
         return Response(UserSerializer(user).data)
