@@ -106,9 +106,9 @@ class UserLanguageViewSet(viewsets.ModelViewSet, SerializerClassRequestContextMi
         """
         serialized_data = LanguageLevelSerializer(data=request.data)
         if serialized_data.is_valid():
-            data = self.get_queryset().filter(user=request.user, learning=2)
-            user_languages = self.get_context_serializer_class(LanguageSerializer, data, many=True)
-            return Response({'results': user_languages.data})
+            languages = Language.objects.filter(users__user=request.user, users__learning=LearningLevels.PROFICIENT)
+            serialized_languages = self.get_context_serializer_class(LanguageSerializer, languages, many=True)
+            return Response({'results': serialized_languages.data})
         else:
             return Response(serialized_data.errors, status=HTTP_400_BAD_REQUEST)
 
@@ -119,9 +119,9 @@ class UserLanguageViewSet(viewsets.ModelViewSet, SerializerClassRequestContextMi
         """
         serialized_data = LanguageLevelSerializer(data=request.data)
         if serialized_data.is_valid():
-            data = self.get_queryset().filter(user=request.user, learning=3)
-            user_languages = self.get_context_serializer_class(LanguageSerializer, data, many=True)
-            return Response({'results': user_languages.data})
+            languages = Language.objects.filter(users__user=request.user, users__learning=LearningLevels.LEARNING)
+            serialized_languages = self.get_context_serializer_class(LanguageSerializer, languages, many=True)
+            return Response({'results': serialized_languages.data})
         else:
             return Response(serialized_data.errors, status=HTTP_400_BAD_REQUEST)
 
