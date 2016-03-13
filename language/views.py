@@ -22,7 +22,8 @@ class LanguageViewSet(viewsets.ReadOnlyModelViewSet):
     @detail_route()
     def get_known_user(self, request, pk):
         language = get_object_or_404(self.get_queryset(), pk=pk)  # type: Language
-        users = language.users.filter(learning__in=[LearningLevels.KNOW, LearningLevels.PROFICIENT])
+        users = language.users.filter(learning__in=[LearningLevels.KNOW, LearningLevels.PROFICIENT]).exclude(
+            user=request.user)
         total_such_users = users.count()
         random_val = random.randrange(0, total_such_users)
         user = users[random_val:1]
