@@ -22,13 +22,14 @@ class LanguageViewSet(viewsets.ReadOnlyModelViewSet):
     @detail_route()
     def get_known_user(self, request, pk):
         language = get_object_or_404(self.get_queryset(), pk=pk)  # type: Language
-        users = language.users.filter(learning__in=[LearningLevels.KNOW, LearningLevels.PROFICIENT]).exclude(
+        language_profiles = language.users.filter(
+            learning__in=[LearningLevels.KNOW, LearningLevels.PROFICIENT]).exclude(
             user=request.user)
-        total_such_users = users.count()
-        random_val = random.randrange(0, total_such_users)
-        users = users[random_val:random_val+1]
-        if len(users) > 0:
-            user = users[0]
+        total_such_profiles = language_profiles.count()
+        random_val = random.randrange(0, total_such_profiles)
+        language_profiles = language_profiles[random_val:random_val+1]
+        if len(language_profiles) > 0:
+            language_profile = language_profiles[0]
         else:
-            user = None
-        return Response(UserSerializer(user).data)
+            return Response(None)
+        return Response(UserSerializer(language_profile.user).data)
